@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Disclosure } from '@headlessui/react';
+import { Disclosure, DisclosurePanel, DisclosureButton, DisclosurePanelProps, DisclosureProps } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface NavItem {
@@ -24,6 +24,8 @@ const navigation: NavItem[] = [
   { name: 'Reports', href: '/reports' },
 ];
 
+//
+
 export function NavBar({ className }: NavBarProps) {
   const pathname = usePathname();
 
@@ -33,10 +35,11 @@ export function NavBar({ className }: NavBarProps) {
         <>
           <div className="w-full">
             <div className="mx-auto max-w-6xl px-6">
-              <div className="relative flex h-16 items-center justify-between">
-                {/* Mobile menu button */}
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                  <Disclosure.Button className="btn btn-ghost btn-square">
+              {/* Use a standard flex row to prevent overlapping between sections */}
+              <div className="flex h-16 items-center justify-between">
+                {/* Mobile menu button (left) */}
+                <div className="relative sm:hidden">
+                  <DisclosureButton className="btn btn-ghost btn-square">
                     <span className="sr-only">Open main menu</span>
                     <Bars3Icon
                       className={clsx(
@@ -52,10 +55,30 @@ export function NavBar({ className }: NavBarProps) {
                       )}
                       aria-hidden="true"
                     />
-                  </Disclosure.Button>
+                  </DisclosureButton>
+
+                  {/* Mobile Navigation Panel: aligned under the hamburger button */}
+                  <DisclosurePanel className="absolute left-0 mt-2 w-56 bg-base-100 border border-base-300 rounded-box shadow z-50">
+                    <ul className="menu menu-compact p-2 w-full">
+                      {navigation.map((item) => {
+                        const isActive = pathname === item.href;
+                        return (
+                          <li key={item.name}>
+                            <Link
+                              href={item.href}
+                              aria-current={isActive ? 'page' : undefined}
+                              className={clsx(isActive && 'active')}
+                            >
+                              {item.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </DisclosurePanel>
                 </div>
 
-                {/* Logo/Brand */}
+                {/* Brand + Desktop navigation (center/fill) */}
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <Link href="/" className="flex items-center space-x-2">
@@ -86,33 +109,15 @@ export function NavBar({ className }: NavBarProps) {
                   </div>
                 </div>
 
-                {/* Theme Toggle */}
-                <div className="absolute inset-y-0 right-0 flex items-center">
+                {/* Theme Toggle (right) */}
+                <div className="flex items-center">
                   <ThemeToggle />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Mobile Navigation Panel */}
-          <Disclosure.Panel className="sm:hidden bg-base-100 border-b border-base-300">
-            <div className="menu p-2">
-              {navigation.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Disclosure.Button
-                    key={item.name}
-                    as={Link}
-                    href={item.href}
-                    className={clsx('btn btn-ghost justify-start', isActive && 'btn-active')}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
-                );
-              })}
-            </div>
-          </Disclosure.Panel>
+          {/* Mobile Navigation Panel rendered inside the hamburger wrapper above */}
         </>
       )}
     </Disclosure>
