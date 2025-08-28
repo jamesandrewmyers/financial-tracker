@@ -32,17 +32,17 @@ export default function Home() {
 
   return (
     // Modern page layout with dark mode support
-    <main className="min-h-screen bg-base-200 py-8">
+    <main className="py-8 min-h-screen bg-base-200">
       <Container>
         {/* Page header using new Heading and Text components */}
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <Heading className="mb-4">
             Financial Dashboard
           </Heading>
           <Text size="lg" color="muted" className="mb-6">
             Track your income and expenses with modern design
           </Text>
-          <div className="flex justify-center gap-4">
+          <div className="flex gap-4 justify-center">
             <Button variant="primary">
               View Reports
             </Button>
@@ -53,7 +53,7 @@ export default function Home() {
         </div>
         
         {/* Main content using Card components */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="gap-6 grid grid-cols-1 lg:grid-cols-3">
           {/* Form column */}
           <div className="lg:col-span-1">
             <Card>

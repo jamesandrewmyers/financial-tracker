@@ -70,71 +70,69 @@ export default function TransactionForm({ onTransactionAdded }: TransactionFormP
   return (
     // Form content without card wrapper - now handled by parent Card component
     <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Description field */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Description</span>
-          </label>
-          <input 
-            type="text" 
-            className="input input-bordered w-full"
-            placeholder="e.g., Grocery shopping"
-            value={form.description}
-            onChange={e => setForm({ ...form, description: e.target.value })} 
-            required
-          />
-        </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          {/* Category field */}
-          <div className="form-control">
-            <label className="label"><span className="label-text">Category</span></label>
+        <div className="flex items-end">
+          <div className="form-control w-auto">
+            <label className="label">
+              <span className="label-text">Description</span>
+            </label>
             <input 
               type="text" 
               className="input input-bordered w-full"
-              placeholder="e.g., Food"
-              value={form.category}
-              onChange={e => setForm({ ...form, category: e.target.value })} 
+              placeholder="e.g., Grocery shopping"
+              value={form.description}
+              onChange={e => setForm({ ...form, description: e.target.value })} 
               required
             />
           </div>
-          
-          {/* Amount field */}
-          <div className="form-control">
-            <label className="label"><span className="label-text">Amount ($)</span></label>
+
+          <div className="form-control w-auto">
+            <label className="label">
+              <span className="label-text">Category</span>
+            </label>
             <input 
-              type="number" 
-              step="0.01"
+              type="text" 
               className="input input-bordered w-full"
-              placeholder="0.00"
-              value={form.amount || ''}
-              onChange={e => setForm({ ...form, amount: parseFloat(e.target.value) || 0 })} 
+              placeholder="e.g., Grocery shopping"
+              value={form.description}
+              onChange={e => setForm({ ...form, description: e.target.value })} 
               required
             />
           </div>
-        </div>
-        
-        {/* Date field */}
-        <div className="form-control">
-          <label className="label"><span className="label-text">Date</span></label>
-          <input 
-            type="date" 
-            className="input input-bordered w-full"
-            value={form.date}
-            onChange={e => setForm({ ...form, date: e.target.value })} 
-            required
-          />
-        </div>
-        
-        {/* Submit button */}
-        <Button 
-          type="submit" 
-          variant="primary"
-          size="lg"
-          className="w-full"
-        >
-          Add Transaction
-        </Button>
+
+            <div className="form-control w-auto">
+              <label className="label">
+                <span className="label-text">Amount ($)</span>
+              </label>
+              <input 
+                type="number" 
+                step="0.01"
+                className="input input-bordered w-full"
+                placeholder="0.00"
+                value={form.amount || ''}
+                onChange={e => setForm({ ...form, amount: parseFloat(e.target.value) || 0 })} 
+                required
+              />
+            </div>
+            <div className="form-control w-auto mr-8">
+              <label className="label">
+                <span className="label-text">Date</span>
+              </label>
+              <input 
+                type="date" 
+                className="input input-bordered"
+                value={form.date}
+                onChange={e => setForm({ ...form, date: e.target.value })} 
+                required
+              />
+            </div>
+            <div className="form-control w-auto">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+              type="submit"
+              className="btn btn-primary"
+              value="Add"
+            />
+            </div>
+        </div>        
       </form>
-  );
+  ); 
 }

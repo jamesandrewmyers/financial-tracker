@@ -3,10 +3,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 
 export default function TransactionsPage() {
   return (
-    <main className="min-h-screen bg-base-200 py-8">
+    <main className="py-8 min-h-screen bg-base-200">
       <Container>
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-base-content mb-2">Transactions</h1>
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 font-bold text-3xl text-base-content">Transactions</h1>
           <p className="text-base opacity-70">Manage and view all your transactions</p>
         </div>
         
@@ -15,7 +15,7 @@ export default function TransactionsPage() {
             <CardTitle>All Transactions</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="dark:text-gray-300 text-gray-600">
               Transaction management features coming soon...
             </p>
           </CardContent>

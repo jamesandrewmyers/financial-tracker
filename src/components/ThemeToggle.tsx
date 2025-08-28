@@ -23,8 +23,8 @@ export function ThemeToggle() {
   // Don't render anything until mounted to prevent hydration mismatch
   if (!mounted) {
     return (
-      <button className="p-2 rounded-lg bg-gray-100 dark:bg-secondary-800 w-10 h-10 flex items-center justify-center">
-        <div className="w-5 h-5 bg-gray-300 dark:bg-secondary-600 rounded animate-pulse" />
+      <button className="flex items-center justify-center p-2 h-10 w-10 bg-gray-100 dark:bg-secondary-800 rounded-lg">
+        <div className="h-5 w-5 bg-gray-300 dark:bg-secondary-600 rounded animate-pulse" />
         <span className="sr-only">Loading theme toggle</span>
       </button>
     );
@@ -47,9 +47,9 @@ export function ThemeToggle() {
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (
-        <SunIcon className="w-5 h-5" />
+        <SunIcon className="h-5 w-5" />
       ) : (
-        <MoonIcon className="w-5 h-5" />
+        <MoonIcon className="h-5 w-5" />
       )}
     </button>
   );

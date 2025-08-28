@@ -6,9 +6,9 @@ import Button from "@/components/ui/Button";
 
 export default function AccountsPage() {
   return (
-    <main className="min-h-screen bg-base-200 py-8">
+    <main className="py-8 min-h-screen bg-base-200">
       <Container>
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <Heading as="h1" size="lg" className="mb-4">
             Accounts
           </Heading>

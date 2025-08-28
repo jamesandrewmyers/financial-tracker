@@ -3,10 +3,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 
 export default function ReportsPage() {
   return (
-    <main className="min-h-screen bg-base-200 py-8">
+    <main className="py-8 min-h-screen bg-base-200">
       <Container>
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-base-content mb-2">Reports</h1>
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 font-bold text-3xl text-base-content">Reports</h1>
           <p className="text-base opacity-70">View financial reports and analytics</p>
         </div>
         
@@ -15,7 +15,7 @@ export default function ReportsPage() {
             <CardTitle>Financial Reports</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="dark:text-gray-300 text-gray-600">
               Reporting features coming soon...
             </p>
           </CardContent>

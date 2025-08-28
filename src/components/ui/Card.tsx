@@ -66,7 +66,7 @@ export function Card({
     hover && [
       'hover:shadow-md',
       'hover:border-base-300',
-      'transform hover:scale-[1.02]',
+      'hover:scale-[1.02] transform',
       onClick && 'cursor-pointer'
     ],
     // User-provided additional classes
@@ -145,7 +145,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className }: CardHeaderProps) {
   return (
-    <div className={clsx('card-body border-b border-base-300 pb-4 mb-0', className)}>{children}</div>
+    <div className={clsx('mb-0 pb-4 border-b border-base-300 card-body', className)}>{children}</div>
   );
 }
 
@@ -188,7 +188,7 @@ interface CardFooterProps {
 
 export function CardFooter({ children, className }: CardFooterProps) {
   return (
-    <div className={clsx('card-actions justify-end p-4 border-t border-base-300', className)}>{children}</div>
+    <div className={clsx('justify-end p-4 border-base-300 border-t card-actions', className)}>{children}</div>
   );
 }
 

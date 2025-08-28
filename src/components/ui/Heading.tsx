@@ -16,13 +16,13 @@ export function Heading({
 }: HeadingProps) {
   // Define size variants with responsive scaling
   const sizeClasses = {
-    xs: 'text-2xl font-bold',
-    sm: 'text-3xl font-bold',
-    md: 'text-4xl font-bold',
-    lg: 'text-5xl font-bold',
-    xl: 'text-6xl font-bold',
+    xs: 'font-bold text-2xl',
+    sm: 'font-bold text-3xl',
+    md: 'font-bold text-4xl',
+    lg: 'font-bold text-5xl',
+    xl: 'font-bold text-6xl',
     // Responsive scaling from 2xl to 5xl based on viewport
-    responsive: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'
+    responsive: 'font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl'
   };
 
   const headingClasses = clsx(

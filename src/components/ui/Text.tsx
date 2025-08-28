@@ -26,7 +26,7 @@ export function Text({
     lg: 'text-lg',
     xl: 'text-xl',
     // Responsive scaling for optimal readability
-    responsive: 'text-sm sm:text-base lg:text-lg'
+    responsive: 'sm:text-base lg:text-lg text-sm'
   };
 
   // Define color variants

@@ -43,6 +43,10 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
   const [sortColumn, setSortColumn] = useState<SortColumn>('date');
   // State to track the sort direction (ascending or descending)
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  // State to hold the filter text for filtering transactions by description
+  const [filterText, setFilterText] = useState('');
+  // State to hold the applied filter (what's actually being used to filter)
+  const [appliedFilter, setAppliedFilter] = useState('');
 
   // Function to handle column header clicks for sorting
   // Takes the column name and toggles sort direction or changes sort column
@@ -57,8 +61,26 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
     }
   };
 
+  // Function to handle filter button click
+  const handleFilter = () => {
+    setAppliedFilter(filterText);
+  };
+
+  // Function to clear the filter
+  const clearFilter = () => {
+    setFilterText('');
+    setAppliedFilter('');
+  };
+
+  // Filter transactions based on applied filter text
+  const filteredTransactions = appliedFilter 
+    ? transactions.filter(transaction => 
+        transaction.description.toLowerCase().includes(appliedFilter.toLowerCase())
+      )
+    : transactions;
+
   // Function to sort transactions based on current sort column and direction
-  const sortedTransactions = [...transactions].sort((a, b) => {
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
     let aValue: string | number = a[sortColumn];
     let bValue: string | number = b[sortColumn];
     
@@ -128,7 +150,7 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
     }
     // If this is the current sort column, show appropriate arrow based on direction
     return (
-      <span className="text-primary-600 dark:text-primary-400">
+      <span className="dark:text-primary-400 text-primary-600">
         {sortDirection === 'asc' ? '↑' : '↓'}
       </span>
     );
@@ -137,7 +159,7 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
   // Show loading state with dark mode support
   if (loading) {
     return (
-      <div className="mt-6 w-full card bg-base-100 border border-base-300 shadow p-8">
+      <div className="mt-6 p-8 w-full bg-base-100 border border-base-300 shadow card">
         <div className="flex items-center justify-center">
           <span className="loading loading-spinner" />
           <span className="ml-3">Loading transactions...</span>
@@ -147,36 +169,82 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
   }
 
   return (
-    <div className="mt-6 w-full card bg-base-100 border border-base-300 shadow overflow-hidden">
-      {/* Header with dark mode styling */}
-      <div className="px-6 py-4 border-b border-base-300 bg-base-200">
-        <h2 className="text-lg font-semibold">
-          Transaction History
-        </h2>
-        <p className="text-sm opacity-70 mt-1">
-          Click column headers to sort • Updates every 10 seconds
-        </p>
+    <div className="overflow-hidden mt-6 w-full bg-base-100 border border-base-300 shadow card">
+      {/* Header with dark mode styling and filter functionality */}
+      <div className="px-6 py-4 bg-base-200 border-b border-base-300">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-semibold text-lg">
+              Transaction History
+            </h2>
+            <p className="mt-1 text-sm opacity-70">
+              Click column headers to sort • Updates every 10 seconds
+              {appliedFilter && (
+                <>
+                  <span className="ml-2">• Filtered by: "{appliedFilter}"</span>
+                  <button 
+                    onClick={clearFilter}
+                    className="ml-2 text-primary hover:text-primary-focus underline"
+                  >
+                    Clear filter
+                  </button>
+                </>
+              )}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Filter by description..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleFilter()}
+              className="input input-bordered input-sm w-48"
+            />
+            <button
+              onClick={handleFilter}
+              className="btn btn-primary btn-sm"
+            >
+              Filter
+            </button>
+          </div>
+        </div>
       </div>
       
       {transactions.length === 0 ? (
         // Empty state with dark mode support
         <div className="p-12 text-center">
-          <div className="opacity-50 mb-4">
-            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mb-4 opacity-50">
+            <svg className="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium mb-2">
+          <h3 className="mb-2 font-medium text-lg">
             No transactions yet
           </h3>
           <p className="opacity-70">
             Add your first transaction to get started tracking your finances
           </p>
         </div>
+      ) : sortedTransactions.length === 0 ? (
+        // No results after filtering
+        <div className="p-12 text-center">
+          <div className="mb-4 opacity-50">
+            <svg className="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <h3 className="mb-2 font-medium text-lg">
+            No matching transactions
+          </h3>
+          <p className="opacity-70">
+            No transactions found containing "{appliedFilter}". Try a different search term.
+          </p>
+        </div>
       ) : (
         // Table with enhanced dark mode styling
         <div className="overflow-x-auto">
-          <div className="max-h-96 overflow-y-auto">
+          <div className="overflow-y-auto max-h-96">
             <table className="table table-zebra">
               <thead className="sticky top-0 bg-base-200">
                 <tr>
@@ -210,7 +278,7 @@ export default function TransactionList({ refreshKey }: TransactionListProps) {
               <tbody>
                 {sortedTransactions.map((transaction) => (
                   <tr key={transaction.id}>
-                    <td className="whitespace-nowrap text-sm font-medium">
+                    <td className="font-medium text-sm whitespace-nowrap">
                       {new Date(transaction.date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
