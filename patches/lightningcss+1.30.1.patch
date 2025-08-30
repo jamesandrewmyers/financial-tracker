@@ -1,0 +1,13 @@
+diff --git a/node_modules/lightningcss/node/index.js b/node_modules/lightningcss/node/index.js
+index 011d04b..245fb9d 100644
+--- a/node_modules/lightningcss/node/index.js
++++ b/node_modules/lightningcss/node/index.js
+@@ -17,7 +17,7 @@ if (process.env.CSS_TRANSFORMER_WASM) {
+   module.exports = require(`../pkg`);
+ } else {
+   try {
+-    module.exports = require(`lightningcss-${parts.join('-')}`);
++    module.exports = require("lightningcss-darwin-arm64");
+   } catch (err) {
+     module.exports = require(`../lightningcss.${parts.join('-')}.node`);
+   }

@@ -8,6 +8,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 // Import the NavBar component for navigation
 import { NavBar } from "@/components/NavBar";
+import Providers from "./providers";
 
 // Configure the Inter font from Google Fonts
 // Inter is a modern, highly legible font designed specifically for user interfaces
@@ -49,18 +50,12 @@ export default function RootLayout({
         data-theme="corporate"
         suppressHydrationWarning
       >
-        {/* Wrap the entire app with ThemeProvider for dark mode support */}
-        <ThemeProvider 
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           {/* Navigation bar with sticky positioning and scroll effects */}
           <NavBar />
           {/* Render the page content passed as children prop */}
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

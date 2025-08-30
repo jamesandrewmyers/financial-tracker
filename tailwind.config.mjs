@@ -8,6 +8,5 @@ export default {
   darkMode: 'class',
   theme: { extend: {} },
   plugins: [typography, forms, daisyui],
-  daisyui: { themes: ["corporate"] },
+  daisyui: { themes: true },
 };
-
